@@ -129,4 +129,24 @@ public class GUIWs {
 			return new Respuesta(false,"Error al eliminar la tarea");
 		}
 	}
+	
+	@Path("tareas/{id}/run")
+	@Produces(MediaType.APPLICATION_JSON)
+	@POST
+	public Respuesta add(@PathParam("id") Long id) {
+		try {
+			if (id==null) {
+				return new Respuesta(false,"Se debe especificar el ID de la tarea");
+			}
+			else {
+				Tarea t=tareaDao.getById(id);
+				SUATTareaProcessor.getInstance().executeThisTaskNow(t);
+				return new Respuesta(true,"Tarea ejecutada correctamente");
+			}
+		} catch (Exception e) {
+			LOG.error("Error al crear la tarea",e);
+			return new Respuesta(false,"Error al ejecutar la tarea");
+		}
+	}
+	
 }

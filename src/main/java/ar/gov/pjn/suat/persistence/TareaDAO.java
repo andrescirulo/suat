@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -21,13 +19,7 @@ import ar.gov.pjn.suat.persistence.domain.Tarea;
 
 public class TareaDAO extends DAO<Tarea, Long> {
 
-	private static EntityManager em;
 	private static TareaDAO instance;
-
-	static {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("suat-pu");
-		em = emf.createEntityManager(); // Retrieve an application managed entity manager
-	}
 
 	public static TareaDAO getInstance() {
 		if (instance == null) {
@@ -45,7 +37,7 @@ public class TareaDAO extends DAO<Tarea, Long> {
 	}
 
 	protected EntityManager getEm() {
-		return em;
+		return SUATTareaProcessor.getInstance().getEntityManager();
 	}
 
 	public List<Tarea> getTareasActivas() {
@@ -55,7 +47,7 @@ public class TareaDAO extends DAO<Tarea, Long> {
 	}
 
 	public List<Tarea> getTareas(FiltroTareas filtro) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEm().getCriteriaBuilder();
 		CriteriaQuery<Tarea> cq = cb.createQuery(Tarea.class);
 		Root<Tarea> root = cq.from(Tarea.class);
 		List<Predicate> predicates = buildFilter(cb, root, filtro);
@@ -64,7 +56,7 @@ public class TareaDAO extends DAO<Tarea, Long> {
 		}
 
 		cq.select(root);
-		TypedQuery<Tarea> q = em.createQuery(cq);
+		TypedQuery<Tarea> q = getEm().createQuery(cq);
 		List<Tarea> items = q.getResultList();
 		return items;
 	}
@@ -96,14 +88,14 @@ public class TareaDAO extends DAO<Tarea, Long> {
 					.getTriggersOfJob(tarea.getJobKey());
 			Date proximaEjecucion = triggers.get(0).getNextFireTime();
 
-			em.getTransaction().begin();
+			getEm().getTransaction().begin();
 			Tarea t = findOne(tarea.getId());
 			t.setUltimaEjecucion(ultimaEjecucion);
 			t.setProximaEjecucion(proximaEjecucion);
 			save(t);
-			em.getTransaction().commit();
+			getEm().getTransaction().commit();
 		} catch (SchedulerException e) {
-			em.getTransaction().rollback();
+			getEm().getTransaction().rollback();
 		}
 	}
 

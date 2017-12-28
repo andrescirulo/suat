@@ -6,6 +6,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobDataMap;
@@ -29,8 +33,13 @@ public class SUATTareaProcessor {
 	private static SUATTareaProcessor instance = new SUATTareaProcessor();
 	private Scheduler sched;
 	private EstadoSUATTareas estado = new EstadoSUATTareas();
-
+	private static EntityManager em;
 	private TareaDAO tareaDao;
+	
+	static {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("suat-pu");
+		em = emf.createEntityManager(); // Retrieve an application managed entity manager
+	}
 	
 	private SUATTareaProcessor() {
 		tareaDao=TareaDAO.getInstance();
@@ -39,6 +48,11 @@ public class SUATTareaProcessor {
 	public static SUATTareaProcessor getInstance() {
 		return instance;
 	}
+	
+	public EntityManager getEntityManager() {
+		return em;
+	}
+	
 
 	public void init() {
 		try {
