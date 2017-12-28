@@ -1,0 +1,2 @@
+cd workspace\suat
+cmd

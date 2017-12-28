@@ -1,0 +1,6 @@
+<Context path="/suat">
+	<ResourceLink name="jdbc/suat"
+	                    global="jdbc/suat"
+	                    auth="Container"
+	                    type="javax.sql.DataSource" /> 
+</Context>
