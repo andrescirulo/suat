@@ -25,9 +25,9 @@ public abstract class Tarea {
 	
 	private String nombre;
 	
-	private String grupo;
+	private Grupo grupo;
 	
-	private String fuero;
+	private Fuero fuero;
 	
 	private Boolean pausable;
 	
@@ -57,11 +57,11 @@ public abstract class Tarea {
 		this.pausable = pausable;
 	}
 
-	public String getFuero() {
+	public Fuero getFuero() {
 		return fuero;
 	}
 
-	public void setFuero(String fuero) {
+	public void setFuero(Fuero fuero) {
 		this.fuero = fuero;
 	}
 
@@ -81,11 +81,11 @@ public abstract class Tarea {
 		this.nombre = nombre;
 	}
 
-	public String getGrupo() {
+	public Grupo getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(String grupo) {
+	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
 

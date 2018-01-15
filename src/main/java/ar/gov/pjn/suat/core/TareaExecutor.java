@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -22,8 +23,8 @@ import org.quartz.JobExecutionException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ar.gov.pjn.suat.persistence.EjecucionTareaDAO;
-import ar.gov.pjn.suat.persistence.TareaDAO;
+import ar.gov.pjn.suat.persistence.dao.EjecucionTareaDAO;
+import ar.gov.pjn.suat.persistence.dao.TareaDAO;
 import ar.gov.pjn.suat.persistence.domain.EjecucionTarea;
 import ar.gov.pjn.suat.persistence.domain.Tarea;
 
@@ -39,10 +40,15 @@ public class TareaExecutor implements Job {
 	}
 	
 	public void execute(JobExecutionContext context) throws JobExecutionException {
+		EntityTransaction transaction = SUATTareaProcessor.getInstance().getEntityManager().getTransaction();
+		Context.setTransaction(transaction);
+		transaction.begin();
 		executeNow(context.getMergedJobDataMap());
+		transaction.commit();
 	}
 
 	public void executeNow(JobDataMap map) {
+		
 		Tarea tarea = (Tarea) map.get("tarea");
 		EjecucionTarea et=new EjecucionTarea();
 		et.setFechaInicio(new Date());

@@ -23,7 +23,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 
 import ar.gov.pjn.suat.persistence.FiltroTareas;
-import ar.gov.pjn.suat.persistence.TareaDAO;
+import ar.gov.pjn.suat.persistence.dao.TareaDAO;
 import ar.gov.pjn.suat.persistence.domain.Tarea;
 
 public class SUATTareaProcessor {
@@ -83,6 +83,7 @@ public class SUATTareaProcessor {
 		listJobsAndTriggers("");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void listJobsAndTriggers(String extraMessage){
 		List<String> jobGroups;
 		Set<JobKey> jobsInGroup;

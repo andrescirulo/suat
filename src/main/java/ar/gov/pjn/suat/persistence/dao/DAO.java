@@ -1,4 +1,4 @@
-package ar.gov.pjn.suat.persistence;
+package ar.gov.pjn.suat.persistence.dao;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,7 +46,6 @@ public abstract class DAO<E,ID extends Serializable> {
 	}
 	
 	public E save(E elem){
-		getEm().getTransaction().begin();
 		E savedEntity;
 
         if (getEm().contains(elem) ) {
@@ -56,21 +55,16 @@ public abstract class DAO<E,ID extends Serializable> {
             savedEntity = elem;
         }
         getEm().flush();
-        getEm().getTransaction().commit();
 		return savedEntity;
 	}
 	
 	public void delete(E elem){
-		getEm().getTransaction().begin();
 		getEm().remove(elem);
 		getEm().flush();
-		getEm().getTransaction().commit();
 	}
 	
 	public void delete(ID id){
-		getEm().getTransaction().begin();
 		getEm().remove(findOne(id));
 		getEm().flush();
-		getEm().getTransaction().commit();
 	}
 }

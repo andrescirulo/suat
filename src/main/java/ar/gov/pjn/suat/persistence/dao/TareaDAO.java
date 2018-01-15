@@ -1,4 +1,4 @@
-package ar.gov.pjn.suat.persistence;
+package ar.gov.pjn.suat.persistence.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +15,7 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 
 import ar.gov.pjn.suat.core.SUATTareaProcessor;
+import ar.gov.pjn.suat.persistence.FiltroTareas;
 import ar.gov.pjn.suat.persistence.domain.Tarea;
 
 public class TareaDAO extends DAO<Tarea, Long> {

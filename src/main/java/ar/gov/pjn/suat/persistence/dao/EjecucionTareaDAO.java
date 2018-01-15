@@ -1,4 +1,4 @@
-package ar.gov.pjn.suat.persistence;
+package ar.gov.pjn.suat.persistence.dao;
 
 import javax.persistence.EntityManager;
 

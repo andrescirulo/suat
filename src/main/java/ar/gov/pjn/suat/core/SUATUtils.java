@@ -1,6 +1,7 @@
 package ar.gov.pjn.suat.core;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,7 +14,6 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
@@ -34,7 +34,9 @@ public class SUATUtils {
 		String groupName = tarea.getGrupo() + "_" + tarea.getFuero() + "Group";
 		
 		TriggerBuilder<Trigger> tb = TriggerBuilder.newTrigger().withIdentity(triggerName, groupName);
-		
+		if (tarea.getProximaEjecucion()!=null && tarea.getProximaEjecucion().after(new Date())) {
+			tb.startAt(tarea.getProximaEjecucion());
+		}
 		switch (tarea.getTipo()) {
 		case PERIODICA:
 			CalendarIntervalScheduleBuilder csb=CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
@@ -42,16 +44,9 @@ public class SUATUtils {
 			tb.withSchedule(csb);
 			break;
 		case DEFINE_TAREA:
-			String jobClassName = ((TareaAutoDefinida) tarea).getClassName();
-			try {
-//				SelfScheduledDaemonJob jobInstance = (SelfScheduledDaemonJob) Class.forName(jobClassName).newInstance();
-				SimpleScheduleBuilder ssb = SimpleScheduleBuilder.simpleSchedule();
-				tb.withSchedule(ssb);
-//				trigger.setStartTime(jobInstance.getNextStartTime());
-			} catch (ClassCastException e) {
-				LOG.error("Para el tipo DEFINE_TAREA el Job debe ser SelfScheduledDaemonJob",e);
-			} catch (Exception e) {
-				LOG.error("Ocurrió un error al obtener el trigger de la tarea",e);
+			Date nextFire = ((TareaAutoDefinida) tarea).consultarProximaEjecucion();
+			if (nextFire!=null) {
+				tb.startAt(nextFire);
 			}
 			break;
 		case CRON:

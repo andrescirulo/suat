@@ -17,9 +17,9 @@ public class EjecucionTarea {
 
 	private String tareaNombre;
 
-	private String tareaGrupo;
+	private Grupo tareaGrupo;
 
-	private String tareaFuero;
+	private Fuero tareaFuero;
 
 	private Date fechaInicio;
 
@@ -53,19 +53,19 @@ public class EjecucionTarea {
 		this.tareaNombre = tareaNombre;
 	}
 
-	public String getTareaGrupo() {
+	public Grupo getTareaGrupo() {
 		return tareaGrupo;
 	}
 
-	public void setTareaGrupo(String tareaGrupo) {
+	public void setTareaGrupo(Grupo tareaGrupo) {
 		this.tareaGrupo = tareaGrupo;
 	}
 
-	public String getTareaFuero() {
+	public Fuero getTareaFuero() {
 		return tareaFuero;
 	}
 
-	public void setTareaFuero(String tareaFuero) {
+	public void setTareaFuero(Fuero tareaFuero) {
 		this.tareaFuero = tareaFuero;
 	}
 

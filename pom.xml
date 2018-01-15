@@ -58,21 +58,21 @@
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jcl</artifactId>
 			<version>2.10.0</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.10.0</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -85,12 +85,13 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>2.3.0</version>
-			<exclusions>
-		        <exclusion>
-				    <groupId>org.slf4j</groupId>
-				    <artifactId>slf4j-api</artifactId>
-		        </exclusion>
-		      </exclusions> 
+			<!-- ESTA EXCLUSION DEPENDE DE SI TENES ESTA LIBRERIA YA EN EL TOMCAT (HIKARI) -->
+<!-- 			<exclusions> -->
+<!-- 				<exclusion> -->
+<!-- 					<groupId>org.slf4j</groupId> -->
+<!-- 					<artifactId>slf4j-api</artifactId> -->
+<!-- 				</exclusion> -->
+<!-- 			</exclusions>  -->
 		</dependency>
 
 		<dependency>
@@ -104,6 +105,14 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.0</version>
 			<scope>provided</scope>
+		</dependency>
+
+
+		<!-- KEYCLOAK -->
+		<dependency>
+		    <groupId>org.keycloak</groupId>
+		    <artifactId>keycloak-adapter-core</artifactId>
+		    <version>3.4.2.Final</version>
 		</dependency>
 
 

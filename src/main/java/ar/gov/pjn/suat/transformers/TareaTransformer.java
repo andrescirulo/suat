@@ -2,6 +2,8 @@ package ar.gov.pjn.suat.transformers;
 
 import org.quartz.DateBuilder.IntervalUnit;
 
+import ar.gov.pjn.suat.persistence.dao.FueroDAO;
+import ar.gov.pjn.suat.persistence.dao.GrupoDAO;
 import ar.gov.pjn.suat.persistence.domain.Tarea;
 import ar.gov.pjn.suat.persistence.domain.TareaAutoDefinida;
 import ar.gov.pjn.suat.persistence.domain.TareaCron;
@@ -22,7 +24,7 @@ public class TareaTransformer {
 		case DEFINE_TAREA: {
 			TareaAutoDefinida tdt = new TareaAutoDefinida();
 			llenarDatosBase(tdt, tInput);
-			tdt.setClassName(tInput.getClassName());
+			tdt.setTimeEndpoint(tInput.getTimeEndpoint());
 			return tdt;
 		}
 		case PERIODICA: {
@@ -48,7 +50,7 @@ public class TareaTransformer {
 		case DEFINE_TAREA: {
 			TareaAutoDefinida tdt = (TareaAutoDefinida) tarea;
 			llenarDatosBase(tdt, tInput);
-			tdt.setClassName(tInput.getClassName());
+			tdt.setTimeEndpoint(tInput.getTimeEndpoint());
 			return tdt;
 		}
 		case PERIODICA: {
@@ -87,8 +89,8 @@ public class TareaTransformer {
 
 	private static void llenarDatosBase(Tarea tarea ,TareaWSInput tInput) {
 		tarea.setEndpoint(tInput.getEndpoint());
-		tarea.setFuero(tInput.getFuero());
-		tarea.setGrupo(tInput.getGrupo());
+		tarea.setFuero(FueroDAO.getInstance().getById(tInput.getFuero()));
+		tarea.setGrupo(GrupoDAO.getInstance().getById(tInput.getGrupo()));
 		tarea.setNombre(tInput.getNombre());
 		tarea.setId(tInput.getId());
 		tarea.setPausable(tInput.getPausable());

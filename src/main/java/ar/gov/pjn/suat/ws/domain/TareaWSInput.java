@@ -28,11 +28,11 @@ public class TareaWSInput implements Serializable{
 
 	@FormParam("grupo")
 	@NotNull
-	private String grupo;
+	private Long grupo;
 
 	@FormParam("fuero")
 	@NotNull
-	private String fuero;
+	private Long fuero;
 
 	@FormParam("pausable")
 	@NotNull
@@ -52,8 +52,8 @@ public class TareaWSInput implements Serializable{
 	@FormParam("intervalo")
 	private Integer intervalo;
 	
-	@FormParam("className")
-	private String className;
+	@FormParam("timeEndpoint")
+	private String timeEndpoint;
 	
 	@FormParam("expresion")
 	private String expresion;
@@ -82,19 +82,19 @@ public class TareaWSInput implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public String getGrupo() {
+	public Long getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(String grupo) {
+	public void setGrupo(Long grupo) {
 		this.grupo = grupo;
 	}
 
-	public String getFuero() {
+	public Long getFuero() {
 		return fuero;
 	}
 
-	public void setFuero(String fuero) {
+	public void setFuero(Long fuero) {
 		this.fuero = fuero;
 	}
 
@@ -130,12 +130,12 @@ public class TareaWSInput implements Serializable{
 		this.intervalo = intervalo;
 	}
 
-	public String getClassName() {
-		return className;
+	public String getTimeEndpoint() {
+		return timeEndpoint;
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public void setTimeEndpoint(String timeEndpoint) {
+		this.timeEndpoint = timeEndpoint;
 	}
 
 	public String getExpresion() {
